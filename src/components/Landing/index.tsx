@@ -1,3 +1,5 @@
+import { signIn, signOut, useSession } from "next-auth/react";
+
 import Image from "next/image";
 import {
   Flex,
@@ -10,8 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 import imgLanding from "../../../public/images/ilustra.png";
+import { SiGmail, SiGithub } from "react-icons/si";
 
 export function Landing() {
+  const { data: session } = useSession();
+
+  console.log(session);
   return (
     <Box>
       <Container maxW={"5xl"} display={"flex"} h={{ calc: "100vh - 200px" }}>
@@ -35,7 +41,7 @@ export function Landing() {
             mt={"25px"}
           >
             ACCOUNT
-            <Text as={"span"} color={"orange.400"}>
+            <Text as={"span"} color={"#e96b46"}>
               ED
             </Text>
           </Heading>
@@ -56,8 +62,14 @@ export function Landing() {
                 colorScheme={"orange"}
                 bg={"#db4a39"}
                 _hover={{ bg: "red.500", transform: "scale(1.1)" }}
+                display={"flex"}
+                gap={"5px"}
+                onClick={() => signIn("google")}
               >
                 Entrar com Google
+                <Box as="span" ml={"5px"}>
+                  <SiGmail size={"1.5rem"} />
+                </Box>
               </Button>
               <Button
                 rounded={"full"}
@@ -65,8 +77,13 @@ export function Landing() {
                 colorScheme={"orange"}
                 bg={"#171515"}
                 _hover={{ bg: "gray.800", transform: "scale(1.1)" }}
+                gap={"5px"}
+                onClick={() => signIn("github")}
               >
-                Entrar com Github
+                Entrar com Github{" "}
+                <Box as="span" ml={"5px"}>
+                  <SiGithub size={"1.5rem"} />
+                </Box>
               </Button>
             </Stack>
           </Stack>
